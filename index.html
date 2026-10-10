@@ -7,7 +7,11 @@
 <style>
 :root{
   --bg:#f6f3ee; --card:#fff; --ink:#2b2b2b; --muted:#8a8378; --line:#e6e0d5;
-  --accent:#c0392b; --accent2:#d35400; --brand:#b03a2e; --soft:#fdf0ec;
+  --gold:#d4a017; --gold2:#f6c453; --gold-deep:#a87e0e;
+  --goldgrad:linear-gradient(135deg,#f6c453,#d4a017);
+  --gold-soft:#fbf3dd;
+  --danger:#c0392b; --danger-deep:#96281b; --soft:#fdf0ec;
+  --accent:var(--danger); --accent2:var(--gold); --brand:var(--gold-deep);
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:-apple-system,"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
@@ -16,10 +20,11 @@ header.top{background:linear-gradient(135deg,#b03a2e,#d35400);color:#fff;padding
 header.top h1{margin:0;font-size:19px;font-weight:700}
 header.top p{margin:4px 0 0;font-size:12px;opacity:.9}
 nav.tabs{display:flex;gap:6px;padding:10px 12px;background:#fff;border-bottom:1px solid var(--line);
-  position:sticky;top:57px;z-index:49;overflow-x:auto}
+  position:sticky;top:57px;z-index:49;overflow-x:auto;scrollbar-width:thin}
 nav.tabs button{flex:0 0 auto;border:1px solid var(--line);background:#faf8f4;color:var(--ink);
-  padding:8px 14px;border-radius:20px;cursor:pointer;font-size:14px;white-space:nowrap}
-nav.tabs button.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  padding:8px 14px;border-radius:20px;cursor:pointer;font-size:14px;white-space:nowrap;transition:all .15s}
+nav.tabs button:hover{border-color:var(--gold)}
+nav.tabs button.active{background:var(--goldgrad);color:#5a3a00;border-color:var(--gold);font-weight:700;box-shadow:0 2px 6px rgba(212,160,23,.35)}
 main{max-width:1100px;margin:0 auto;padding:14px}
 .tabpage{display:none}
 .tabpage.active{display:block}
@@ -34,7 +39,9 @@ main{max-width:1100px;margin:0 auto;padding:14px}
 .filters .reset{background:#eee;cursor:pointer;padding:7px 12px;border-radius:7px;border:1px solid var(--line)}
 .resultcount{font-size:13px;color:var(--muted);margin:4px 2px 10px}
 /* 配方卡片 */
-.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px;position:relative}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px;position:relative;
+  box-shadow:0 1px 3px rgba(90,60,0,.05);transition:box-shadow .15s}
+.card:hover{box-shadow:0 3px 10px rgba(90,60,0,.10)}
 .card h3{margin:0 0 6px;font-size:16px;padding-right:70px}
 .card .meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
 .tag{font-size:12px;background:#f0ece3;color:#6b6355;border-radius:5px;padding:2px 8px}
@@ -53,7 +60,7 @@ main{max-width:1100px;margin:0 auto;padding:14px}
 .safetybox ul.inlinewarn{margin:6px 0 0;padding-left:20px}
 .safetybox ul.inlinewarn li{margin:4px 0;color:#7b1f16}
 .section{margin-bottom:14px}
-.section h4{font-size:14px;color:var(--brand);margin:10px 0 5px;border-left:3px solid var(--accent2);padding-left:8px}
+.section h4{font-size:14px;color:var(--gold-deep);margin:10px 0 5px;border-left:3px solid var(--gold);padding-left:8px}
 /* markdown 渲染 */
 .md-body table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13px}
 .md-body th,.md-body td{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top}
@@ -86,22 +93,27 @@ table.md td a{color:#1a56c4}
 .varchips .novar{background:#f0ece3;color:#999}
 /* 速查表 */
 table.qt{border-collapse:collapse;width:100%;font-size:12.5px;background:#fff}
-table.qt th,table.qt td{border:1px solid var(--line);padding:4px 7px;text-align:left}
-table.qt th{background:#f5efe4;position:sticky;top:0}
+table.qt th,table.qt td{border:1px solid var(--line);padding:5px 8px;text-align:left;word-break:break-word}
+table.qt th{background:var(--gold-soft);position:sticky;top:0}
+table.qt tbody tr:nth-child(even){background:#fdfaf2}
+table.qt td.num{text-align:right;font-variant-numeric:tabular-nums}
+table.qt td:nth-child(3),table.qt td:nth-child(4),table.qt td:nth-child(5){text-align:right;font-variant-numeric:tabular-nums}
 table.qt td.est,table.qt .est{color:#a04000}
-.qtwrap{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.qtwrap{max-height:560px;overflow:auto;border:1px solid var(--line);border-radius:8px;content-visibility:auto;contain-intrinsic-size:auto 560px}
+#national-sites details.sitecity{content-visibility:auto;contain-intrinsic-size:auto 80px}
 a.jump{cursor:pointer}
 .biz h3{color:var(--brand)}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
 .cartbadge{background:#fff;color:var(--brand);border-radius:10px;padding:1px 7px;font-size:12px;margin-left:4px}
-.addcart{margin-top:8px;background:var(--brand);color:#fff;border:none;border-radius:15px;padding:5px 14px;cursor:pointer;font-size:13px}
-.addcart:hover{background:#96281b}
-.addcart .n{background:#fff;color:var(--brand);border-radius:9px;padding:0 6px;margin-left:5px;font-size:12px}
-.cartbtn{background:var(--accent2);color:#fff;border:none;border-radius:7px;padding:7px 13px;cursor:pointer;font-size:13px;margin-right:8px}
-.cartbtn.danger{background:#777}
+.addcart{margin-top:8px;background:var(--goldgrad);color:#5a3a00;border:none;border-radius:15px;padding:5px 14px;cursor:pointer;font-size:13px;font-weight:600}
+.addcart:hover{filter:brightness(1.05)}
+.addcart .n{background:#fff;color:var(--gold-deep);border-radius:9px;padding:0 6px;margin-left:5px;font-size:12px}
+.cartbtn{background:var(--goldgrad);color:#5a3a00;border:none;border-radius:7px;padding:7px 13px;cursor:pointer;font-size:13px;margin-right:8px;font-weight:600}
+.cartbtn.danger{background:#9aa0a6;color:#fff}
 #cart-items table,#cart-agg table{border-collapse:collapse;width:100%;font-size:13px;background:#fff}
-#cart-items th,#cart-items td,#cart-agg th,#cart-agg td{border:1px solid var(--line);padding:5px 8px;text-align:left}
-#cart-items th,#cart-agg th{background:#f5efe4}
+#cart-items th,#cart-items td,#cart-agg th,#cart-agg td{border:1px solid var(--line);padding:6px 9px;text-align:left;word-break:break-word}
+#cart-items th,#cart-agg th{background:var(--gold-soft)}
+#cart-items tbody tr:nth-child(even),#cart-agg tbody tr:nth-child(even){background:#fdfaf2}
 #cart-items input[type=number]{width:70px;padding:3px}
 .delbtn{background:#f8d7da;color:#c0392b;border:none;border-radius:5px;padding:3px 9px;cursor:pointer}
 .needfix{color:#a04000;font-size:12px}
@@ -140,17 +152,61 @@ details.sitedistrict[open] summary:before{content:"▾ "}
 .modal .ok{width:100%;background:var(--brand);color:#fff;border:none;padding:10px;border-radius:7px;cursor:pointer}
 .modal .fine{font-size:11px;color:#999;margin-top:10px;line-height:1.5}
 .locktag{position:absolute;top:10px;left:10px;background:#e67e22;color:#fff;font-size:11px;padding:2px 8px;border-radius:10px}
+/* v5 付费墙入口升级 */
+.lockbtn{background:linear-gradient(135deg,#f6c453,#d4a017)!important;color:#5a3a00!important;font-weight:700;position:relative}
+.lockbtn .pricebadge{display:inline-block;background:#b03a2e;color:#fff;font-size:11px;border-radius:9px;padding:1px 7px;margin-left:5px;vertical-align:middle}
+.lockoverlay{flex-direction:column;gap:8px;cursor:pointer}
+.lockoverlay .cta{display:inline-block;background:linear-gradient(135deg,#f6c453,#d4a017);color:#5a3a00;font-weight:700;font-size:13px;
+  padding:7px 16px;border-radius:18px;box-shadow:0 2px 8px rgba(212,160,23,.4)}
+.lockoverlay small{color:#8a7a55;font-weight:400;font-size:11px}
+.unlockbar{position:fixed;top:0;left:0;right:0;z-index:99;background:linear-gradient(90deg,#fbf3dd,#f6e6bd);
+  color:#6b4a00;font-size:13px;padding:7px 14px;display:none;align-items:center;justify-content:space-between;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.unlockbar.show{display:flex}
+.unlockbar button{background:linear-gradient(135deg,#f6c453,#d4a017);color:#5a3a00;border:none;border-radius:15px;padding:5px 14px;font-weight:700;cursor:pointer}
+.guide-bubble{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:98;background:#fff8e6;
+  border:1px solid #e6d08a;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:14px 16px;max-width:420px;width:92%;font-size:13px;display:none}
+.guide-bubble.show{display:block}
+.guide-bubble h4{margin:0 0 6px;color:#a04000}
+.guide-bubble ul{margin:4px 0;padding-left:18px;line-height:1.7}
+.guide-bubble .gotit{margin-top:8px;width:100%;background:linear-gradient(135deg,#f6c453,#d4a017);color:#5a3a00;border:none;border-radius:8px;padding:8px;font-weight:700;cursor:pointer}
+.modal .bigprice{font-size:40px;color:var(--brand);font-weight:800;margin:6px 0}
+.modal .launchbadge{display:inline-block;background:#b03a2e;color:#fff;font-size:11px;border-radius:9px;padding:2px 8px;margin-left:8px;vertical-align:middle}
+.modal .benefits{text-align:left;margin:10px 0;padding:0 4px;list-style:none}
+.modal .benefits li{padding:5px 0;border-bottom:1px dashed #eee;font-size:13px}
+.modal .benefits li:before{content:"✓ ";color:#27ae60;font-weight:700}
+.modal a.buy.soldout{background:#bbb!important;pointer-events:none;text-align:center}
+.modal .trust{font-size:11px;color:#888;text-align:center;margin-top:8px}
+.modal .toast{color:#27ae60;font-weight:700;margin-top:6px;min-height:18px;text-align:center}
 @media print{
   body *{visibility:hidden}
   #tab-cart,#tab-cart *{visibility:visible}
   #tab-cart{position:absolute;left:0;top:0;width:100%}
   #tab-cart .cartbtn,#tab-cart .note,#btn-clear{display:none!important}
 }
-@media(max-width:600px){
+@media(max-width:768px){
   main{padding:10px}
+  .filters .row{gap:8px}
   .filters select,.filters input{max-width:100%}
+  .card{padding:12px 13px}
+  .modal{padding:16px}
   .cityrow b{min-width:70px;display:block}
+  #national-sites details.sitedistrict{margin:6px 4px}
 }
+@media(max-width:480px){
+  header.top h1{font-size:16px}
+  nav.tabs{padding:8px}
+  nav.tabs button{padding:7px 11px;font-size:13px}
+  .card h3{font-size:15px;padding-right:60px}
+  .guide-bubble{width:94%;left:3%;transform:none}
+  .unlockbar{font-size:12px;padding:6px 10px}
+  .unlockbar button{padding:4px 10px;font-size:12px}
+  .modal .bigprice{font-size:32px}
+  table.qt{font-size:12px}
+  .spot{padding:8px 10px}
+}
+/* 顶部 sticky 解锁条占位，避免遮挡 */
+body{padding-top:0}
+body.unlocked-bar-shown{padding-top:34px}
 </style>
 </head>
 <body>
@@ -164,8 +220,20 @@ details.sitedistrict[open] summary:before{content:"▾ "}
   <button data-tab="cost">成本预算</button>
   <button data-tab="site">选址与规则</button>
   <button data-tab="cart">采购单 <span id="cart-badge" class="cartbadge">0项·¥0</span></button>
-  <button id="btn-unlock-nav" class="lockbtn">🔓 解锁完整版</button>
+  <button id="btn-unlock-nav" class="lockbtn">🔓 解锁完整版<span class="pricebadge">¥29.9</span></button>
 </nav>
+<div class="unlockbar" id="unlock-bar">
+  <span>205 个配方完整克数 ¥29.9 一次解锁</span>
+  <button id="btn-unlock-bar">立即解锁</button>
+</div>
+<div class="guide-bubble" id="guide-bubble">
+  <h4>👋 先看看免费内容</h4>
+  <ul>
+    <li><b>免费可看</b>：地区 / 精髓句 / 成本 / 难度 / 筛选 / 总览 / 城市索引 / 全国 48 城选址</li>
+    <li><b>付费解锁</b>：205 配方完整克数 + 采购单全量换算 + 持续更新</li>
+  </ul>
+  <button class="gotit" id="btn-guide-gotit">知道了</button>
+</div>
 <main>
   <!-- 配方库 -->
   <section id="tab-lib" class="tabpage active">
@@ -9679,14 +9747,20 @@ details.sitedistrict[open] summary:before{content:"▾ "}
 <div class="modal-mask" id="unlock-modal">
   <div class="modal">
     <h3>🔓 解锁完整版 · 205 份配方克数表</h3>
-    <p style="margin:4px 0;color:#666;font-size:13px">解锁后可查看全部灵魂层克数表、完整配方正文与采购单完整换算。</p>
-    <div class="price">¥29.9 <span style="font-size:12px;color:#999;font-weight:400">一次性</span></div>
-    <a class="buy" id="buy-link" href="#">前往购买（面包多 / 爱发电）</a>
+    <div class="bigprice">¥29.9<span class="launchbadge">首发价，之后 ¥49</span></div>
+    <ul class="benefits">
+      <li>205 配方灵魂层 / 主料层完整克数表</li>
+      <li>采购单一键换算全量原料汇总</li>
+      <li>全国 48 城选址 · 995 点位查看</li>
+      <li>配方持续更新，一次购买永久查看</li>
+    </ul>
+    <a class="buy" id="buy-link" href="#">前往购买</a>
     <div style="text-align:center;color:#bbb;font-size:12px;margin:4px 0">— 或输入解锁码 —</div>
     <input type="text" id="unlock-code" placeholder="输入解锁码">
     <button class="ok" id="btn-unlock-confirm">确认解锁</button>
-    <div id="unlock-msg" style="color:#c0392b;font-size:13px;margin-top:6px;min-height:18px"></div>
-    <button class="ok" id="btn-modal-close" style="background:#999;margin-top:6px">关闭</button>
+    <div id="unlock-msg" class="toast"></div>
+    <div class="trust">🔒 解锁后同浏览器永久有效，可随时查看</div>
+    <button class="ok" id="btn-modal-close" style="background:#999;margin-top:10px">关闭</button>
     <div class="fine">本解锁为纯前端方案，技术用户可通过查看源码绕过，适合知识付费+轻度保护场景；如需强保护请配合服务端/平台方案。</div>
   </div>
 </div>
@@ -9734,13 +9808,22 @@ function md2html(md){
   closeList();return out.join('\n');
 }
 
-/* ---------- Tab 切换 ---------- */
+/* ---------- Tab 切换（非首屏 Tab 首次激活再渲染标记） ---------- */
+const renderedTabs=new Set(['lib']);
+function ensureTabRendered(name){
+  if(renderedTabs.has(name)) return;
+  renderedTabs.add(name);
+  // 预内联内容首屏跳过渲染，激活时再触发回流（配合 content-visibility）
+  const el=document.getElementById('tab-'+name);
+  if(el){ el.style.contentVisibility='auto'; }
+}
 document.querySelectorAll('nav.tabs button').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.tabpage').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    ensureTabRendered(btn.dataset.tab);
     window.scrollTo({top:0});
   });
 });
@@ -10064,27 +10147,50 @@ let unlocked = (localStorage.getItem('stallbook_unlocked')==='1');
 
 function openUnlock(){
   document.getElementById('unlock-modal').classList.add('show');
-  document.getElementById('unlock-msg').textContent='';
+  const msg=document.getElementById('unlock-msg'); msg.textContent=''; msg.style.color='#c0392b';
 }
 function closeUnlock(){ document.getElementById('unlock-modal').classList.remove('show'); }
 document.getElementById('btn-unlock-nav').addEventListener('click',openUnlock);
+document.getElementById('btn-unlock-bar').addEventListener('click',openUnlock);
 document.getElementById('btn-modal-close').addEventListener('click',closeUnlock);
-document.querySelector('#unlock-modal .modal-mask')?.addEventListener('click',e=>{if(e.target.id==='unlock-modal')closeUnlock();});
-// 购买链接位
+document.getElementById('unlock-modal').addEventListener('click',e=>{if(e.target.id==='unlock-modal')closeUnlock();});
+// 购买链接位：未配置 -> 灰态 disabled
 (function(){
   const link=document.getElementById('buy-link');
   const url=BUY_LINKS.mianduo||BUY_LINKS.aifadian;
-  if(!url){ link.href='#'; link.textContent='购买链接待配置'; }
+  if(!url){ link.href='javascript:void(0)'; link.classList.add('soldout'); link.textContent='支付通道即将开放，敬请期待'; }
   else link.href=url;
+})();
+// sticky 解锁条：滚动后出现，回顶/已解锁隐藏（rAF 节流）
+let _tick=false;
+window.addEventListener('scroll',()=>{
+  if(_tick) return; _tick=true;
+  requestAnimationFrame(()=>{
+    _tick=false;
+    const bar=document.getElementById('unlock-bar');
+    if(unlocked){ bar.classList.remove('show'); document.body.classList.remove('unlocked-bar-shown'); return; }
+    if(window.scrollY>120){ bar.classList.add('show'); document.body.classList.add('unlocked-bar-shown'); }
+    else { bar.classList.remove('show'); document.body.classList.remove('unlocked-bar-shown'); }
+  });
+},{passive:true});
+// 首次访问引导浮层
+(function(){
+  if(unlocked||localStorage.getItem('unlock_guide_seen')==='1') return;
+  const g=document.getElementById('guide-bubble'); g.classList.add('show');
+  document.getElementById('btn-guide-gotit').addEventListener('click',()=>{
+    localStorage.setItem('unlock_guide_seen','1'); g.classList.remove('show');
+  });
 })();
 document.getElementById('btn-unlock-confirm').addEventListener('click',()=>{
   const code=document.getElementById('unlock-code').value.trim();
   const msg=document.getElementById('unlock-msg');
   if(UNLOCK_CODES.indexOf(code)>=0){
     localStorage.setItem('stallbook_unlocked','1'); unlocked=true;
-    applyUnlock(); closeUnlock();
+    applyUnlock();
+    msg.style.color='#27ae60'; msg.textContent='✅ 已解锁，感谢支持';
+    setTimeout(closeUnlock,1200);
   }else{
-    msg.textContent='解锁码错误';
+    msg.style.color='#c0392b'; msg.textContent='解锁码无效，请检查大小写/格式';
   }
 });
 function applyUnlock(){
@@ -10093,14 +10199,22 @@ function applyUnlock(){
   document.querySelectorAll('.lockoverlay').forEach(el=>el.remove());
   document.querySelectorAll('.locktag').forEach(el=>el.remove());
   const nav=document.getElementById('btn-unlock-nav');
-  nav.textContent='✅ 已解锁';
+  nav.innerHTML='✅ 已解锁';
+  document.getElementById('unlock-bar').classList.remove('show');
+  document.getElementById('guide-bubble').classList.remove('show');
   renderCart();
 }
 function lockWrap(innerHtml){
   if(unlocked) return innerHtml;
   return '<div class="locked-body">'+innerHtml+'</div>'+
-         '<div class="lockoverlay">🔒 付费解锁后查看完整克数<br><small>点右上角「🔓解锁完整版」</small></div>';
+         '<div class="lockoverlay">🔒 付费解锁后查看完整克数'+
+         '<span class="cta">解锁完整配方 →</span>'+
+         '<small>点我或右上角「🔓解锁完整版」</small></div>';
 }
+// 遮罩上的 CTA 点击打开面板（事件委托）
+document.addEventListener('click',e=>{
+  if(e.target.closest('.lockoverlay')) openUnlock();
+});
 
 /* ================= 自测钩子 ?selftest=1 ================= */
 function runSelfTest(){
@@ -10128,7 +10242,16 @@ function runSelfTest(){
     if(c0 && !document.getElementById('exp-'+luosifen).innerHTML) renderExpand(RECIPES[luosifen]);
     c0.classList.add('open');
     const lockOverlay1=document.querySelectorAll('.lockoverlay').length;
-    out.push('①锁定态遮罩数='+lockOverlay1);
+    out.push('①锁定态遮罩数='+lockOverlay1+' 遮罩CTA按钮='+document.querySelectorAll('.lockoverlay .cta').length);
+    // v5 入口校验（仍处锁定态）
+    out.push('v5导航含¥29.9='+document.getElementById('btn-unlock-nav').innerText.includes('¥29.9'));
+    out.push('v5sticky条存在='+!!document.getElementById('unlock-bar'));
+    out.push('v5引导浮层可见='+document.getElementById('guide-bubble').classList.contains('show'));
+    // 打开面板检查权益清单+灰态购买按钮
+    openUnlock();
+    out.push('v5面板含你将获得='+!!document.querySelector('.modal .benefits'));
+    out.push('v5购买按钮灰态='+document.getElementById('buy-link').classList.contains('soldout'));
+    closeUnlock();
     // ② 错误码
     document.getElementById('unlock-code').value='WRONG123';
     document.getElementById('btn-unlock-confirm').click();
@@ -10140,6 +10263,9 @@ function runSelfTest(){
     out.push('③正码解锁 unlocked='+unlocked+' 遮罩残留='+document.querySelectorAll('.lockoverlay').length);
     // ④ localStorage
     out.push('④localStorage='+localStorage.getItem('stallbook_unlocked'));
+    // 引导关闭写标记
+    localStorage.setItem('unlock_guide_seen','1');
+    out.push('引导标记可写='+(localStorage.getItem('unlock_guide_seen')==='1'));
     // 选址关键词
     const siteText=document.getElementById('national-sites').innerText;
     out.push('选址含柳州旧块窑埠古镇='+(document.getElementById('sitebox').innerText.indexOf('窑埠古镇')>=0)+' 谷埠街='+(document.getElementById('sitebox').innerText.indexOf('谷埠街')>=0));
@@ -10151,6 +10277,14 @@ function runSelfTest(){
     out.push('点位卡片数='+document.querySelectorAll('#national-sites .spot').length);
     out.push('选址URL外链数='+document.querySelectorAll('#national-sites a[href^="http"]').length);
     out.push('待核实次数='+(siteText.split('待核实').length-1));
+    // v6 UI 打磨校验
+    const cssText=[...document.styleSheets].map(s=>{try{return [...s.cssRules].map(r=>r.cssText).join(' ')}catch(e){return ''}}).join(' ');
+    out.push('v6金色变量--gold='+getComputedStyle(document.documentElement).getPropertyValue('--gold').trim());
+    out.push('v6卡片样式类='+!!document.querySelector('.card')+' 筛选='+!!document.querySelector('.filters')+' 激活页签='+!!document.querySelector('nav.tabs button.active'));
+    out.push('v6采购单表容器='+!!document.querySelector('#cart-agg table')+' 成本速查表='+!!document.querySelector('table.qt'));
+    out.push('v6媒体查询768='+cssText.includes('max-width: 768px')+' 480='+cssText.includes('max-width: 480px'));
+    out.push('v6延迟渲染钩子='+(typeof ensureTabRendered==='function')+' 已记录Tab='+[...renderedTabs].join(','));
+    out.push('v6金色激活页签='+document.querySelector('nav.tabs button.active')?.classList.contains('active'));
   }catch(err){ out.push('ERROR:'+err.message); }
   const node=document.getElementById('selftest-result');
   node.style.display='block'; node.textContent=out.join(' | ');
